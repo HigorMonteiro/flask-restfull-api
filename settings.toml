@@ -1,0 +1,11 @@
+[default]
+SQLALCHEMY_TRACK_MODIFICATIONS=false
+
+[development]
+SQLALCHEMY_DATABASE_URI="postgresql://postgresql:password@localhost/flask-database-zappts-dev"
+
+[production]
+SQLALCHEMY_DATABASE_URI="postgresql://postgresql:password@localhost/flask-database-zappts"
+
+[testing]
+SQLALCHEMY_DATABASE_URI="sqlite://"
