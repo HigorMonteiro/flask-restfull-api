@@ -18,8 +18,11 @@ _mailinglist
 .idea/
 docs/_build/
 .vscode
-__pycache__
-
+/__pycache__
+.__pycache__/
+__pycache__/
+*.pyc
+.rest
 # Coverage reports
 htmlcov/
 .coverage
