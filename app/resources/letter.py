@@ -1,7 +1,7 @@
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_restful import Resource, reqparse, marshal
+from flask_restful import Resource, reqparse, marshal, marshal_with
 from flask import request
 from random import getrandbits
 
@@ -48,3 +48,23 @@ class Create(Resource):
             logging.critical(str(e))
             db.session.rollback()
             return {"error": "It was not possible to send your letter"}, 500
+
+
+class LetterList(Resource):
+    @marshal_with(letter_fields, "letter")
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        letters = Letter.query.all()
+        return letters
+
+
+class LetterGet(Resource):
+    @jwt_required()
+    def get(self, reference_id):
+        current_user = get_jwt_identity()
+        letter = Letter.query.filter_by(reference_id=reference_id).first()
+        if not letter:
+            return {"error": "letter not found"}, 404
+
+        return marshal(letter, letter_fields, "letter")

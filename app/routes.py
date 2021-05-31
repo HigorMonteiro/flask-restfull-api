@@ -10,3 +10,5 @@ def init_app(app):
     api.add_resource(auth.ForgetPassword, "/auth/forget-password")
 
     api.add_resource(letter.Create, "/letter/create")
+    api.add_resource(letter.LetterList, "/letters")
+    api.add_resource(letter.LetterGet, "/letters/<reference_id>")
