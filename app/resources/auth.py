@@ -35,15 +35,15 @@ class Login(Resource):
 class Register(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("email", required=True, help="O campo email é obrigatório")
+        parser.add_argument("email", required=True, help="The email field is required.")
         parser.add_argument(
-            "password", required=True, help="O campo senha é obrigatório"
+            "password", required=True, help="The password field is mandatory"
         )
         args = parser.parse_args()
 
         user = User.query.filter_by(email=args.email).first()
         if user:
-            return {"error": "e-mail já registrado!"}, 400
+            return {"error": "Email already registered!"}, 400
 
         user = User()
         user.email = args.email
@@ -54,31 +54,31 @@ class Register(Resource):
             db.session.commit()
             send_mail("Bem vindo(a) ", user.email, "welcome", email=user.email)
 
-            return {"message": "Usuario registrado com sucesso"}, 201
+            return {"message": "User successfully registered"}, 201
         except Exception as e:
             db.session.rollback()
             logging.critical(str(e))
-            return {"error": "nao foi possivel registrar o usuario"}, 500
+            return {"error": "It was not possible to register the user"}, 500
 
 
 class ForgetPassword(Resource):
     def post(self):
         parser = reqparse.RequestParser(trim=True)
-        parser.add_argument("email", required=True, help="o campo email e obrigatorio")
+        parser.add_argument("email", required=True, help="The email field is required.")
         args = parser.parse_args()
 
         user = User.query.filter_by(email=args.email).first()
         if not user:
-            return {"error": "dados nao encontrados"}, 400
+            return {"error": "Data not found"}, 400
 
         password_temp = secrets.token_hex(8)
         user.password = generate_password_hash(password_temp)
         db.session.add(user)
         db.session.commit()
         send_mail(
-            "Recuperação de senha",
+            "Password recovery",
             user.email,
             "forget-password",
             password_temp=password_temp,
         )
-        return {"message": "email enviado com sucesso"}
+        return {"message": "Email successfully sent"}
