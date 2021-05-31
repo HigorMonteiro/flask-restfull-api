@@ -4,4 +4,6 @@ format:
 check:
 		@black ./app --check
 
-.PYTHON: format check
+test:
+		@FLASK_ENV=testing pytest -vv -s
+.PYTHON: format check test

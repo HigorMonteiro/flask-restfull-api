@@ -6,7 +6,7 @@ from flask import request
 from random import getrandbits
 
 from app.extensions import db
-from app.models import Letter, User, UserLetter
+from app.models import Letter, User
 from app.schemas import user_fields, letter_fields
 
 
@@ -33,14 +33,6 @@ class Create(Resource):
             letter.message = args.message
             letter.user_id = user.id
             db.session.add(letter)
-            db.session.commit()
-
-            user_letter = UserLetter()
-            user_letter.user = user
-            user_letter.letter = letter
-            user_letter.user_id = user.id
-            user_letter.letter_id = letter.id
-            db.session.add(user_letter)
             db.session.commit()
 
             return marshal(letter, letter_fields, "letter")
