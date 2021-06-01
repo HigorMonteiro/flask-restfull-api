@@ -17,6 +17,7 @@ Flask-Admin = "^1.5.8"
 python-slugify = "^5.0.2"
 Flask-Mail = "^0.9.1"
 black = "^21.5b1"
+python-dotenv = "^0.17.1"
 
 [tool.poetry.dev-dependencies]
 python-dotenv = "^0.17.1"

@@ -8,3 +8,6 @@ def create_app():
     extensions.init_app(app)
     routes.init_app(app)
     return app
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
