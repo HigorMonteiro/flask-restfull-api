@@ -9,6 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(84), nullable=False, unique=True, index=True)
     password = db.Column(db.String(255), nullable=False)
     letters = db.relationship("Letter", backref="users", uselist=True)
+
     def __str__(self):
         return self.email
 

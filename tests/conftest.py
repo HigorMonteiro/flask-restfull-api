@@ -22,10 +22,6 @@ def create_database(app):
 
 @fixture(autouse=True)
 def makedb(create_database):
-    user = User()
-    user.email = "higorvmonteiro@gmail.com"
-    user.password = "12345"
-    db.session.add(user)
 
     letter = Letter()
     letter.name = "Higor Vinicius"
