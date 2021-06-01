@@ -13,4 +13,6 @@ RUN pip install --upgrade pip && \
 
 COPY . /app
 
+RUN flask db upgrade
+
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5000"]
